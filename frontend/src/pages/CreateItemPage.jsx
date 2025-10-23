@@ -69,21 +69,23 @@ const CreateItemPage = () => {
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
           <input type="text" name="title" id="title" value={title} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            placeholder="Enter item title"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500" />
         </div>
 
         {/* Description */}
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
           <textarea name="description" id="description" value={description} onChange={onChange} required rows="4"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+            placeholder="Describe the item in detail"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500"></textarea>
         </div>
         
         {/* Category */}
         <div>
           <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
           <select name="category" id="category" value={category} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white">
             <option value="lost">Lost</option>
             <option value="found">Found</option>
           </select>
@@ -93,28 +95,31 @@ const CreateItemPage = () => {
         <div>
           <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
           <input type="date" name="date" id="date" value={date} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white" />
         </div>
 
         {/* Location */}
         <div>
           <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
           <input type="text" name="location" id="location" value={location} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            placeholder="Where was it found/lost?"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500" />
         </div>
 
         {/* Contact Name */}
         <div>
           <label htmlFor="contactName" className="block text-sm font-medium text-gray-700">Contact Name</label>
           <input type="text" name="contactName" id="contactName" value={contactName} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            placeholder="Your name"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500" />
         </div>
 
         {/* Contact Email */}
         <div>
           <label htmlFor="contactEmail" className="block text-sm font-medium text-gray-700">Contact Email</label>
           <input type="email" name="contactEmail" id="contactEmail" value={contactEmail} onChange={onChange} required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+            placeholder="your.email@example.com"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-gray-900 bg-white placeholder-gray-500" />
         </div>
 
         {/* ... Other fields: description, date, location, contactName, contactEmail ... */}
