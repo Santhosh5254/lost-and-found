@@ -13,35 +13,44 @@ connectDB();
 
 const app = express();
 
+// Middleware
 app.use(cors());
-app.use(express.json()); // To accept JSON data
+app.use(express.json()); // Parse JSON
 
-// --- Static File Serving (MUST be before API routes) ---
+// --- Static File Serving ---
 const __dirname = path.resolve();
 const uploadsPath = path.join(__dirname, 'uploads');
+const publicPath = path.join(__dirname, 'public');
+
+// Ensure uploads folder exists
+if (!fs.existsSync(uploadsPath)) fs.mkdirSync(uploadsPath, { recursive: true });
+
+// Ensure public folder exists (for favicon)
+if (!fs.existsSync(publicPath)) fs.mkdirSync(publicPath, { recursive: true });
+
 console.log('Serving uploads from:', uploadsPath);
-
-// Check if uploads directory exists
-if (!fs.existsSync(uploadsPath)) {
-  console.log('Creating uploads directory...');
-  fs.mkdirSync(uploadsPath, { recursive: true });
-}
-
 console.log('Files in uploads:', fs.readdirSync(uploadsPath));
 
-// Serve static files with CORS
-app.use('/uploads', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-}, express.static(uploadsPath));
+// Serve uploads folder statically
+app.use('/uploads', express.static(uploadsPath));
 
-// API Routes
+// Serve public folder statically (for favicon or other assets)
+app.use(express.static(publicPath));
+
+// --- Favicon ---
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(publicPath, 'favicon.ico'));
+});
+
+// --- API Routes ---
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
 
-// Error Handling Middleware
+// --- Error Handling Middleware ---
 app.use(notFound);
 app.use(errorHandler);
 
