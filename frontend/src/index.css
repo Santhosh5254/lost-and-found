@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Base reset and app-wide defaults */
 html, body, #root {
@@ -8,7 +10,7 @@ html, body, #root {
 body {
   margin: 0;
   min-width: 320px;
-  background-color: #000000; /* Tailwind's bg-gray-100 */
+  background-color: #000000; /* Black background */
   color: rgb(17 24 39); /* Tailwind's text-gray-900 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
