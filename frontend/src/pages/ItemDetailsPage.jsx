@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { getImageUrl } from '../services/api';
 import Spinner from '../components/Spinner';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
@@ -52,9 +52,13 @@ const ItemDetailsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <img
-            src={`http://localhost:5000${item.image}`}
+            src={getImageUrl(item.image)}
             alt={item.title}
             className="w-full h-auto object-cover rounded-lg shadow-lg"
+            onError={(e) => {
+              console.error('Image failed to load:', getImageUrl(item.image));
+              e.target.style.display = 'none';
+            }}
           />
         </div>
         <div className="flex flex-col">

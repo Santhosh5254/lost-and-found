@@ -20,17 +20,20 @@ const HomePage = () => {
     const fetchItems = async () => {
       try {
         setLoading(true);
+        setError(null);
         const { data } = await api.get('/items', {
           params: {
             pageNumber: page,
             ...searchParams,
           },
         });
-        setItems(data.items);
-        setPage(data.page);
-        setPages(data.pages);
+        setItems(data.items || []);
+        setPage(data.page || 1);
+        setPages(data.pages || 1);
       } catch (err) {
-        setError(err.message);
+        console.error('Error fetching items:', err);
+        setError(err.response?.data?.message || err.message || 'Failed to fetch items');
+        setItems([]);
       } finally {
         setLoading(false);
       }
@@ -43,8 +46,20 @@ const HomePage = () => {
     setPage(1); // Reset to first page on new search
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading) return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="text-white text-xl">Loading...</div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="text-red-500 text-xl text-center">
+        <p>Error: {error}</p>
+        <p className="text-sm mt-2">Make sure the backend server is running on port 5000</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-black">

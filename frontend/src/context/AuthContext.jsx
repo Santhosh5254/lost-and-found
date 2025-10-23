@@ -7,26 +7,46 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  const logout = () => {
+    localStorage.removeItem('userInfo');
+    setUser(null);
+  };
+
   useEffect(() => {
     // Check for user in localStorage on initial load
     const storedUser = localStorage.getItem('userInfo');
     if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      // Optional: Check if token is expired
-      const decoded = jwtDecode(userData.token);
-      if (decoded.exp * 1000 < Date.now()) {
-        logout(); // Token expired
-      } else {
-        setUser(userData);
+      try {
+        const userData = JSON.parse(storedUser);
+        // Optional: Check if token is expired
+        if (userData.token) {
+          const decoded = jwtDecode(userData.token);
+          if (decoded.exp * 1000 < Date.now()) {
+            logout(); // Token expired
+          } else {
+            setUser(userData);
+          }
+        }
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('userInfo');
       }
     }
   }, []);
 
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password });
-    localStorage.setItem('userInfo', JSON.stringify(data));
-    setUser(data);
-    return data;
+    try {
+      console.log('Attempting login with:', { email, password: '***' });
+      const { data } = await api.post('/auth/login', { email, password });
+      console.log('Login successful, received data:', data);
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      setUser(data);
+      return data;
+    } catch (error) {
+      console.error('Login error:', error);
+      console.error('Error response:', error.response?.data);
+      throw error;
+    }
   };
 
   const register = async (name, email, password) => {
@@ -34,11 +54,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('userInfo', JSON.stringify(data));
     setUser(data);
     return data;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('userInfo');
-    setUser(null);
   };
 
   return (
