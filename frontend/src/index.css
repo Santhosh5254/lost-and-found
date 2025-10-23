@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Base reset and app-wide defaults */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #000000; /* Tailwind's bg-gray-100 */
+  color: rgb(17 24 39); /* Tailwind's text-gray-900 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve link appearance to rely on component classes */
+a {
+  text-decoration: none;
+}
