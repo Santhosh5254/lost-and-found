@@ -1,10 +1,14 @@
+// src/services/api.js
 import axios from 'axios';
 
+// Use Vite environment variable for backend URL
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // Your backend URL
+  baseURL: API_BASE_URL, // Backend URL from env
 });
 
-// Request interceptor to add the auth token
+// Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -13,9 +17,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default api;
