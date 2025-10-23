@@ -1,6 +1,7 @@
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {}, // <-- This is the fix
+    // Use the standard Tailwind PostCSS plugin to avoid native lightningcss bindings
+    tailwindcss: {},
     autoprefixer: {},
   },
 };
